@@ -57,28 +57,7 @@ get '/control' do
 
   if session[:access_token]
     # Exibe botões para controlar a música
-    <<-HTML
-      <h1>Controle do Spotify</h1>
-      <button onclick="previous()">Anterior</button>
-      <button onclick="play()">Play</button>
-      <button onclick="pause()">Pause</button>
-      <button onclick="next()">Próxima</button>
-
-      <script>
-        async function play() {
-          await fetch('/play', { method: 'POST' });
-        }
-        async function pause() {
-          await fetch('/pause', { method: 'POST' });
-        }
-        async function next() {
-          await fetch('/next', { method: 'POST' });
-        }
-        async function previous() {
-          await fetch('/previous', { method: 'POST'});
-        }
-      </script>
-    HTML
+    erb :index
   else
     "Erro: Token de acesso não encontrado. Tente acessar novamente."
   end
