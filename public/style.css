@@ -1,3 +1,83 @@
 :root{
     color-scheme: dark;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #333;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.player {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    margin-top: 20px;
+    width: 300px;
+}
+
+#album-cover {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    color: white;
+    margin: 5px;
+}
+
+.progress-container {
+    width: 100%;
+    background-color: #555;
+    height: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-bar {
+    background-color: #4CAF50;
+    height: 100%;
+    border-radius: 5px;
+    width: 0%;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.volume-icon {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.volume-slider {
+    width: 100px;
+    display: none;
+}
+
+.volume-slider.visible {
+    display: block;
+}

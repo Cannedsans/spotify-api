@@ -4,28 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spot API</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h1>Controle do Spotify</h1>
-      <button onclick="previous()">Anterior</button>
-      <button onclick="play()">Play</button>
-      <button onclick="pause()">Pause</button>
-      <button onclick="next()">Próxima</button>
+    <div class="player">
+        <img id="album-cover" src="capa.jpg" alt="Capa do Álbum">
+        <div class="controls">
+            <button onclick="previous()">Anterior</button>
+            <button onclick="play()">Play</button>
+            <button onclick="pause()">Pause</button>
+            <button onclick="next()">Próxima</button>
+            <div class="progress-container" onclick="seek(event)">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="volume-control">
+                <i class="fas fa-volume-up volume-icon" onclick="toggleVolumeSlider()"></i>
+                <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.1" value="0.5" oninput="setVolume(this.value)">
+            </div>
+        </div>
+    </div>
 
-      <script>
+    <script>
         async function play() {
-          await fetch('/play', { method: 'POST' });
+            await fetch('/play', { method: 'POST' });
         }
+
         async function pause() {
-          await fetch('/pause', { method: 'POST' });
+            await fetch('/pause', { method: 'POST' });
         }
+
         async function next() {
-          await fetch('/next', { method: 'POST' });
+            await fetch('/next', { method: 'POST' });
         }
+
         async function previous() {
-          await fetch('/previous', { method: 'POST'});
+            await fetch('/previous', { method: 'POST' });
         }
-      </script>
+
+        function toggleVolumeSlider() {
+            const volumeSlider = document.getElementById('volume-slider');
+            volumeSlider.classList.toggle('visible');
+        }
+
+        function setVolume(volume) {
+            // Aqui você pode adicionar a lógica para ajustar o volume
+            console.log('Volume ajustado para:', volume);
+        }
+
+        function seek(event) {
+            const progressContainer = event.currentTarget;
+            const clickPosition = event.offsetX;
+            const containerWidth = progressContainer.clientWidth;
+            const seekPercentage = (clickPosition / containerWidth) * 100;
+
+            // Aqui você pode adicionar a lógica para buscar a posição na música
+            console.log('Buscar para:', seekPercentage + '%');
+            document.getElementById('progress-bar').style.width = seekPercentage + '%';
+        }
+
+        // Simulação de progresso da música (apenas para demonstração)
+        setInterval(() => {
+            const progressBar = document.getElementById('progress-bar');
+            const currentWidth = parseFloat(progressBar.style.width) || 0;
+            if (currentWidth < 100) {
+                progressBar.style.width = (currentWidth + 1) + '%';
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
