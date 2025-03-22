@@ -118,3 +118,27 @@ post '/previous' do
     "Erro ao voltar música: #{response.body}"
   end
 end
+
+get '/capa' do
+  if session[:access_token]
+    # Faz uma requisição para obter o estado de reprodução
+    player_response = HTTParty.get('https://api.spotify.com/v1/me/player', headers: {
+      'Authorization' => "Bearer #{session[:access_token]}"
+    })
+
+    if player_response.success?
+      # Extrai as informações da música atual
+      if player_response['item'] && player_response['item']['album'] && player_response['item']['album']['images']
+        # Pega a URL da imagem média (ou qualquer tamanho que você preferir)
+        image_url = player_response['item']['album']['images'][1]['url'] # imagem média (índice 1)
+        redirect image_url # Redireciona para a URL da imagem
+      else
+        "Nenhuma música está tocando no momento ou a música não tem capa."
+      end
+    else
+      "Erro ao obter informações da música: #{player_response.body}"
+    end
+  else
+    "Erro: Token de acesso não encontrado. Tente acessar novamente."
+  end
+end
